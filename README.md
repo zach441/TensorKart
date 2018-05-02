@@ -1,5 +1,7 @@
 TensorKart
 ==========
+A fork of Kevin Hughes's TensorKart. The goal is essentially the same, execpt
+targeting the GBA version of MarioKart instead of the N64 Version.
 
 self-driving MarioKart with TensorFlow
 
