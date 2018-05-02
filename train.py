@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+
+## Most of this follows closely to TensorKart by Kevin Hughes.
+
 
 import numpy as np
 from keras.models import Sequential
@@ -6,12 +8,16 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D
 from keras import optimizers
 from keras import backend as K
-from utils import Sample
 
-# Global variable
+
+class Sample:
+	IMG_W = 240
+	IMG_H = 160
+	IMG_D = 3
+
+#Global Variable
 OUT_SHAPE = 5
-INPUT_SHAPE = (Sample.IMG_H, Sample.IMG_W, Sample.IMG_D)
-
+INPUT_SHAPE = (Sample.IMG_H,Sample.IMG_W,Sample.IMG_D)
 
 def customized_loss(y_true, y_pred, loss='euclidean'):
     # Simply a mean squared error that penalizes large joystick summed values
@@ -23,8 +29,9 @@ def customized_loss(y_true, y_pred, loss='euclidean'):
     elif loss == 'euclidean':
         val = K.sqrt(K.sum(K.square(y_pred-y_true), axis=-1))
     return val
-
-
+	
+	# Above taken from Tensorkart repo
+	
 def create_model(keep_prob = 0.8):
     model = Sequential()
 
@@ -47,8 +54,11 @@ def create_model(keep_prob = 0.8):
     model.add(Dense(OUT_SHAPE, activation='softsign'))
 
     return model
+	
+	# Above taken from tensorkart
+	
 
-
+	
 if __name__ == '__main__':
     # Load Training Data
     x_train = np.load("data/X.npy")
@@ -65,3 +75,7 @@ if __name__ == '__main__':
     model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, shuffle=True, validation_split=0.1)
 
     model.save_weights('model_weights.h5')
+	
+	# Above taken from tensorkart
+	
+	
