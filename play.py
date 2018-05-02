@@ -1,6 +1,6 @@
 
 
-## Most of this follows closely to TensorKart by Kevin Hughes
+## Most of this follows closely to TensorKart by Kevin Hughes.
 from utils import resize_image, XboxController
 from termcolor import cprint
 
