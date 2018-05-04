@@ -18,7 +18,7 @@ import tkMessageBox
 
 from utils import Screenshot, XboxController
 
-IMAGE_SIZE = (320, 240)
+IMAGE_SIZE = (240, 160)
 IDLE_SAMPLE_RATE = 1500
 SAMPLE_RATE = 200
 
@@ -31,7 +31,7 @@ class MainWindow():
         self.sct = mss.mss()
 
         self.root.title('Data Acquisition')
-        self.root.geometry("660x325")
+        self.root.geometry("400x325")
         self.root.resizable(False, False)
 
         # Init controller
@@ -63,11 +63,6 @@ class MainWindow():
         # Images
         self.img_panel = tk.Label(top_half, image=ImageTk.PhotoImage("RGB", size=IMAGE_SIZE)) # Placeholder
         self.img_panel.pack(side = tk.LEFT, expand=False, padx=5)
-
-        # Joystick
-        self.init_plot()
-        self.PlotCanvas = FigCanvas(figure=self.fig, master=top_half)
-        self.PlotCanvas.get_tk_widget().pack(side=tk.RIGHT, expand=False, padx=5)
 
         # Recording
         textframe = tk.Frame(bottom_half, width=332, height=15, padx=5)
@@ -104,7 +99,6 @@ class MainWindow():
     def poll(self):
         self.img = self.take_screenshot()
         self.controller_data = self.controller.read()
-        self.update_plot()
 
         if self.recording == True:
             self.save_data()
@@ -122,11 +116,6 @@ class MainWindow():
         return Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
 
 
-    def update_plot(self):
-        self.plotData.append(self.controller_data) # adds to the end of the list
-        self.plotData.pop(0) # remove the first item in the list, ie the oldest
-
-
     def save_data(self):
         image_file = self.outputDir+'/'+'img_'+str(self.t)+'.png'
         self.img.save(image_file)
@@ -140,18 +129,6 @@ class MainWindow():
         self.img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS) # Resize
         self.img_panel.img = ImageTk.PhotoImage(self.img)
         self.img_panel['image'] = self.img_panel.img
-
-        # Joystick
-        x = np.asarray(self.plotData)
-        self.axes.plot(range(0,self.plotMem), x[:,0], 'r')
-        self.axes.hold(True)
-        self.axes.plot(range(0,self.plotMem), x[:,1], 'b')
-        self.axes.plot(range(0,self.plotMem), x[:,2], 'g')
-        self.axes.plot(range(0,self.plotMem), x[:,3], 'k')
-        self.axes.plot(range(0,self.plotMem), x[:,4], 'y')
-        self.axes.hold(False)
-        self.PlotCanvas.draw()
-
 
     def on_btn_record(self):
         # pause timer
