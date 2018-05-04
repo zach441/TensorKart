@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-from utils import resize_image, XboxController
+from TensorKart.utils import resize_image, XboxController
 from termcolor import cprint
 
 import gym
 import gym_mupen64plus
-from train import create_model
+from TensorKart.train import create_model
 import numpy as np
 
 # Play
