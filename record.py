@@ -8,15 +8,14 @@ import matplotlib
 matplotlib.use('TkAgg')
 from datetime import datetime
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg as FigCanvas
 
 from PIL import ImageTk, Image
 
-import Tkinter as tk
-import ttk
-import tkMessageBox
+import tkinter as tk
+import tkinter.ttk as ttk
+from tkinter import messagebox
 
-from utils import Screenshot, XboxController
+from TensorKart.utils import Screenshot, XboxController
 
 IMAGE_SIZE = (240, 160)
 IDLE_SAMPLE_RATE = 1500
@@ -160,7 +159,7 @@ class MainWindow():
 
         # check that a dir has been specified
         if not self.outputDirStrVar.get():
-            tkMessageBox.showerror(title='Error', message='Specify the Output Directory', parent=self.root)
+            messagebox.showerror(title='Error', message='Specify the Output Directory', parent=self.root)
             should_record = False
 
         else: # a directory was specified
@@ -170,7 +169,7 @@ class MainWindow():
             if os.path.exists(self.outputDir):
 
                 # overwrite the data, yes/no?
-                if tkMessageBox.askyesno(title='Warning!', message='Output Directory Exists - Overwrite Data?', parent=self.root):
+                if messagebox.askyesno(title='Warning!', message='Output Directory Exists - Overwrite Data?', parent=self.root):
                     # delete & re-make the dir:
                     shutil.rmtree(self.outputDir)
                     os.mkdir(self.outputDir)
