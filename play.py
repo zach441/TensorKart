@@ -43,9 +43,9 @@ class Actor(object):
 		# Calibrations
 		# Zach, here are the outputs you'll have to change for our simulator
 		output = [
-            int(joystick[0] * 80),
-            int(joystick[1] * 80),
-            int(round(joystick[2])),
+            int(joystick[0] * 80), #Are these analogue?
+            int(joystick[1] * 80), #Are these analogue?
+            int(round(joystick[2])), # idk what these map out to
             int(round(joystick[3])),
             int(round(joystick[4])),
         ]
