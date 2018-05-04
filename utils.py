@@ -24,12 +24,12 @@ def resize_image(img):
 
 
 class Screenshot(object):
-    SRC_W = 640
-    SRC_H = 480
+    SRC_W = 240
+    SRC_H = 160
     SRC_D = 3
 
-    OFFSET_X = 0
-    OFFSET_Y = 0
+    OFFSET_X = 100
+    OFFSET_Y = 100
 
 
 class Sample:
@@ -71,12 +71,12 @@ class XboxController(object):
 
 
     def read(self):
-        x = self.LeftJoystickX
-        y = self.LeftJoystickY
+        l = self.LeftDPad
+        r = self.RightDPad
         a = self.A
-        b = self.X # b=1, x=2
+        b = self.Y # b=1, x=2
         rb = self.RightBumper
-        return [x, y, a, b, rb]
+        return [l, r, a, b, rb]
 
 
     def _monitor_controller(self):
@@ -115,14 +115,12 @@ class XboxController(object):
                     self.Back = event.state
                 elif event.code == 'BTN_START':
                     self.Start = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY1':
-                    self.LeftDPad = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY2':
-                    self.RightDPad = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY3':
-                    self.UpDPad = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY4':
-                    self.DownDPad = event.state
+                elif event.code == 'ABS_HAT0X':
+                    self.LeftDPad = int(event.state == -1)
+                    self.RightDPad = int(event.state == 1)
+                elif event.code == 'ABS_HAT0Y':
+                    self.UpDPad = int(event.state == -1)
+                    self.DownDPad = int(event.state == 1)
 
 
 class Data(object):
