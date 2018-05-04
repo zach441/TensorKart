@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+
+## Most of this follows closely to TensorKart by Kevin Hughes.
+
 
 import numpy as np
 from keras.models import Sequential
@@ -11,7 +13,6 @@ from TensorKart.utils import Sample
 # Global variable
 OUT_SHAPE = 5
 INPUT_SHAPE = (Sample.IMG_H, Sample.IMG_W, Sample.IMG_D)
-
 
 def customized_loss(y_true, y_pred, loss='euclidean'):
     # Simply a mean squared error that penalizes large joystick summed values
